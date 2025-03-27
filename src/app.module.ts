@@ -15,6 +15,8 @@ import { AdminModule } from './modules/admin/admin.module';
 import { QueueMailConsumer } from './modules/queue-mail/queue-mail.consumer';
 import { UserModule } from './modules/user/user.module';
 import { PublicModule } from './public/public.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -25,6 +27,9 @@ import { PublicModule } from './public/public.module';
       isGlobal: true,
     }),
     ScheduleModule.forRoot(),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'), // Adjust according to your output directory
+    }),
 
       // Typeorm initialize
       TypeOrmModule.forRootAsync({
