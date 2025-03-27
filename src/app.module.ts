@@ -9,7 +9,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validate } from './authentication/auth/config/env.validation';
 import { TypeOrmConfigModule, TypeOrmConfigService } from './authentication/auth/config/typeorm-config';
-import { AuthenticationModule } from './authentication/authentication.module';
 import { LoggerMiddleware } from './authentication/middleware';
 import { AdminModule } from './modules/admin/admin.module';
 import { QueueMailConsumer } from './modules/queue-mail/queue-mail.consumer';
@@ -17,6 +16,8 @@ import { UserModule } from './modules/user/user.module';
 import { PublicModule } from './public/public.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { AuthModule } from './authentication/auth/auth.module';
+import { AppLoggerModule } from './authentication/logger/app-logger.module';
 
 @Module({
   imports: [
@@ -60,7 +61,7 @@ import { join } from 'path';
       
     ]),
     MulterModule.register({dest: './uploads', storage: './uploads'}),
-   AuthenticationModule, AdminModule, UserModule, PublicModule],
+   AuthModule, AdminModule, UserModule, PublicModule, AppLoggerModule],
   controllers: [AppController],
   providers: [AppService, QueueMailConsumer],
 })

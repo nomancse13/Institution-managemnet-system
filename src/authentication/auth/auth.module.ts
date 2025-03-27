@@ -40,7 +40,7 @@ import { SystemUserEntity } from 'src/modules/admin/entities';
       inject: [ConfigService],
     }),
     QueueMailModule,
-    AdminModule,
+    forwardRef(() => AdminModule),
   ],
   controllers: [AuthController],
   providers: [

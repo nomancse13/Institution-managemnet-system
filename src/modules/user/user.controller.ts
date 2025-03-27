@@ -73,7 +73,7 @@ export class UserController {
         summary: 'default',
         value: {
           otpCode: '35FF0C',
-          userTypeSlug: UserTypesEnum.USER,
+          userTypeSlug: UserTypesEnum.TEACHER,
         } as unknown as OtpVerifyDto,
       },
     },

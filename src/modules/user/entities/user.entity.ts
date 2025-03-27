@@ -23,7 +23,7 @@ export class UserEntity extends CommonEntity {
   @Column({ type: 'varchar', length: 255, nullable: true })
   hashedRt: string;
 
-  @Column({ type: 'varchar', length: 255, default: UserTypesEnum.USER })
+  @Column({ type: 'varchar', length: 255, default: UserTypesEnum.TEACHER })
   userType: string;
 
   @Column({

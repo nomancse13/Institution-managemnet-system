@@ -369,7 +369,7 @@ export class AuthService {
     const tokens = await this.getTokens({
       id: user.id,
       email: user.email,
-      hashType: encrypt(UserTypesEnum.USER),
+      hashType: encrypt(UserTypesEnum.TEACHER),
     });
     await this.updateRtHashUser(user.id, tokens.refresh_token);
 
@@ -879,14 +879,14 @@ export class AuthService {
 
   // login to client from user
   async clientLoginFromUser(id: number, userPayload: UserInterface) {
-    if (decrypt(userPayload.hashType) !== UserTypesEnum.USER) {
+    if (decrypt(userPayload.hashType) !== UserTypesEnum.TEACHER) {
       throw new BadRequestException('You are not allow to access this api');
     }
 
     const clinetData = await this.usersRepository.findOne({
       where: {
         id: id,
-        userType: UserTypesEnum.CLIENT,
+        userType: UserTypesEnum.STUDENT,
         status: 'Active',
       },
     });
@@ -894,7 +894,7 @@ export class AuthService {
     const localLoginDto = {
       email: clinetData.email,
       password: clinetData.password,
-      userType: UserTypesEnum.CLIENT,
+      userType: UserTypesEnum.STUDENT,
     };
 
     const loginToClient = await this.signinSelf(localLoginDto);
@@ -903,14 +903,14 @@ export class AuthService {
 
   // login to user from client
   async userLoginFromClient(id: number, userPayload: UserInterface) {
-    if (decrypt(userPayload.hashType) !== UserTypesEnum.CLIENT) {
+    if (decrypt(userPayload.hashType) !== UserTypesEnum.STUDENT) {
       throw new BadRequestException('You are not allow to access this api');
     }
 
     const userData = await this.usersRepository.findOne({
       where: {
         id: id,
-        userType: UserTypesEnum.USER,
+        userType: UserTypesEnum.TEACHER,
         status: 'Active',
       },
     });
@@ -918,7 +918,7 @@ export class AuthService {
     const localLoginDto = {
       email: userData.email,
       password: userData.password,
-      userType: UserTypesEnum.USER,
+      userType: UserTypesEnum.TEACHER,
     };
 
     const loginToClient = await this.signinSelf(localLoginDto);
